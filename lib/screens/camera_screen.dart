@@ -180,7 +180,15 @@ class _CameraScreenState extends State<CameraScreen> {
                         children: [
                           const Icon(Icons.location_on),
                           const SizedBox(width: 8),
-                          Expanded(child: Text(_locationText)),
+                          Expanded(
+                            child: Text(
+                              _locationText,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -188,7 +196,13 @@ class _CameraScreenState extends State<CameraScreen> {
                         children: [
                           const Icon(Icons.wb_sunny),
                           const SizedBox(width: 8),
-                          Text(_weatherText),
+                          Text(
+                            _weatherText,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 24),
@@ -320,7 +334,15 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                   children: [
                     const Icon(Icons.location_on),
                     const SizedBox(width: 8),
-                    Expanded(child: Text(widget.address)),
+                    Expanded(
+                      child: Text(
+                        widget.address,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 8),
@@ -328,15 +350,32 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                   children: [
                     const Icon(Icons.wb_sunny),
                     const SizedBox(width: 8),
-                    Text('$temp$unit ${widget.weatherCondition}'),
+                    Text(
+                      '$temp$unit ${widget.weatherCondition}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 TextField(
                   controller: _descriptionController,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
                   decoration: const InputDecoration(
                     labelText: 'Description',
+                    labelStyle: TextStyle(color: Colors.white70),
                     border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white70),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   ),
                   maxLines: 3,
                 ),

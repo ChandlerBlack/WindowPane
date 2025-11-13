@@ -7,6 +7,7 @@ class LocationService {
     bool serviceEnabled;
     LocationPermission permission;
 
+    // found geolocator seemed cool
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return null;

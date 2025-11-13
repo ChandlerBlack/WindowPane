@@ -9,14 +9,20 @@ import 'settings_screen.dart';
 import 'camera_screen.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final VoidCallback onThemeChanged;
+
+  const MainScreen({
+    super.key,
+    required this.onThemeChanged,
+  });
 
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int _selectedIndex = 2; // Start on home screen
+  int _selectedIndex = 2; // start on home screen
+  int _selectedPhotoIndex = 0; 
   final TextEditingController _searchController = TextEditingController();
   List<PhotoEntry> _photos = [];
   List<PhotoEntry> _filteredPhotos = [];
@@ -89,7 +95,10 @@ class _MainScreenState extends State<MainScreen> {
     );
 
     if (result == true && mounted) {
-      _loadPhotos();
+      await _loadPhotos();
+      setState(() {
+        _selectedPhotoIndex = 0;
+      });
     }
   }
 
@@ -106,7 +115,8 @@ class _MainScreenState extends State<MainScreen> {
     );
 
     if (result == true && mounted) {
-      _loadSettings();
+      await _loadSettings();
+      widget.onThemeChanged();
     }
   }
 
@@ -118,6 +128,7 @@ class _MainScreenState extends State<MainScreen> {
         onPhotoDeleted: _loadPhotos,
         onPhotoTapped: (index) {
           setState(() {
+            _selectedPhotoIndex = index;
             _selectedIndex = 2;
           });
         },
@@ -128,6 +139,7 @@ class _MainScreenState extends State<MainScreen> {
         photos: _filteredPhotos,
         onPhotoTapped: (index) {
           setState(() {
+            _selectedPhotoIndex = index;
             _selectedIndex = 2;
           });
         },
@@ -140,27 +152,11 @@ class _MainScreenState extends State<MainScreen> {
         onPhotoUpdated: _loadPhotos,
         isCelsius: _isCelsius,
         is24Hour: _is24Hour,
+        initialIndex: _selectedPhotoIndex,
       ),
     ];
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          brightness: Brightness.light,
-        ),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
-      themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('WindowPane'),
           actions: [
@@ -228,7 +224,6 @@ class _MainScreenState extends State<MainScreen> {
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
         ),
-      ),
     );
   }
 }
