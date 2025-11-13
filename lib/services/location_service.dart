@@ -1,8 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 
-// This is not working lmao 
-
 
 class LocationService {
   Future<Position?> getCurrentLocation() async {

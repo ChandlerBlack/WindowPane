@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hw6/services/database_service.dart';
 import 'package:intl/intl.dart';
 import '../models/photo_entry.dart';
 
 class GridScreen extends StatelessWidget {
   final List<PhotoEntry> photos;
   final Function(int) onPhotoTapped;
+  final VoidCallback onPhotoDeleted;
   final bool isCelsius;
   final bool is24Hour;
 
@@ -15,7 +17,34 @@ class GridScreen extends StatelessWidget {
     required this.onPhotoTapped,
     required this.isCelsius,
     required this.is24Hour,
+    required this.onPhotoDeleted,
   });
+
+    void _deletePhoto(BuildContext context, PhotoEntry photo) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Photo'),
+        content: const Text('Are you sure you want to delete this photo?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              await DatabaseService.instance.deletePhoto(photo.id!);
+              onPhotoDeleted();
+              if (context.mounted) {
+                Navigator.pop(context);
+              }
+            },
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +77,7 @@ class GridScreen extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: InkWell(
             onTap: () => onPhotoTapped(index),
+            onLongPress: () => _deletePhoto(context, photo),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

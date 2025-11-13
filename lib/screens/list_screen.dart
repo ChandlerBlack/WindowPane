@@ -98,6 +98,7 @@ class ListScreen extends StatelessWidget {
             ),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => onPhotoTapped(index),
+            onLongPress: () => _deletePhoto(context, photo),
           ),
         );
       },

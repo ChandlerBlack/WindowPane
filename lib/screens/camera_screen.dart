@@ -25,7 +25,7 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   CameraController? _controller;
-  List<CameraDescription>? _cameras;
+  List<CameraDescription>? _cameras = [];
   bool _isLoading = true;
   String _locationText = 'Getting location...';
   String _weatherText = 'Getting weather...';
@@ -49,7 +49,7 @@ class _CameraScreenState extends State<CameraScreen> {
       if (_cameras!.isNotEmpty) {
         _controller = CameraController(
           _cameras![0],
-          ResolutionPreset.high,
+          ResolutionPreset.medium,
         );
         await _controller!.initialize();
         if (mounted) {
@@ -191,7 +191,7 @@ class _CameraScreenState extends State<CameraScreen> {
                           Text(_weatherText),
                         ],
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 24),
                       ElevatedButton.icon(
                         onPressed: _takePicture,
                         icon: const Icon(Icons.camera),

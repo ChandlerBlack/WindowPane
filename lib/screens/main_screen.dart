@@ -25,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   bool _is24Hour = false;
   final SettingsService _settingsService = SettingsService();
 
+
   @override
   void initState() {
     super.initState();
@@ -132,6 +133,7 @@ class _MainScreenState extends State<MainScreen> {
         },
         isCelsius: _isCelsius,
         is24Hour: _is24Hour,
+        onPhotoDeleted: _loadPhotos,
       ),
       HomeScreen(
         photos: _filteredPhotos,

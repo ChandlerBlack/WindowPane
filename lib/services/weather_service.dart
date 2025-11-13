@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-// This is not working lmao 
-
 
 class WeatherService {
   // Using Open-Meteo API (free, no key required)
